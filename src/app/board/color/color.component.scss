@@ -1,0 +1,12 @@
+.color-item {
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 3px;
+  transition: ease-in-out opacity .1s;
+
+  &:hover {
+    opacity: .6;
+  }
+}

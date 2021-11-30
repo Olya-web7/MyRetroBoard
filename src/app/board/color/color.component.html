@@ -1,0 +1,10 @@
+<div class="d-flex justify-content-center align-items-center p-1 shadow-sm">
+  <div *ngFor="let color of colorsData">
+    <div
+      [ngStyle]="{background: color}"
+      class="color-item shadow-sm mr-2"
+      (click)="onColorEmit(color)"
+    >
+    </div>
+  </div>
+</div>

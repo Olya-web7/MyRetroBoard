@@ -1,0 +1,42 @@
+<div class="container-fluid">
+  <div cdkDropListGroup class="row">
+    <div class="col-sm-6 col-lg-3 mb-3" *ngFor="let column of boardService.getBoard$() | async">
+      <!-- title -->
+      <div class="d-flex justify-content-between align-items-center p-2 shadow-sm">
+        <h2 class="m-0">{{column.title | titlecase}}</h2>
+          <!-- color -->
+        <app-color (emitColor)="onColorChange($event, column.id)"></app-color>
+      </div>
+
+      <!-- add new card  -->
+      <app-dialog (emitText)="onAddCard($event, column.id)" [question]="'Add new card in ' + column.title + ' column'">
+        <button mat-raised-button class="w-100 mb-1 btn-add" *ngIf="auth.isAuthenticated()">+</button>
+      </app-dialog>
+
+      <div
+        cdkDropList
+        [cdkDropListData]="column.list"
+        class="example-list"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <div
+          cdkDrag
+          class="example-box"
+          [ngStyle]="{background: column.color}"
+          *ngFor="let item of column.list"
+        >
+          <app-board-item
+            [item]="item"
+            (emitText)="onAddComment($event, column.id)"
+            (emitCardItem)="onAddLike($event, column.id)"
+            (emitDeleteCard)="onDeleteCard($event, column.id)"
+          >
+            <div *ngFor="let comment of item.comments">
+              <app-comment [comment]='comment'></app-comment>
+            </div>
+          </app-board-item>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
