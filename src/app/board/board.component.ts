@@ -18,10 +18,7 @@ export class BoardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-     // this.boardService.getColumn().subscribe(column => {
-    //   console.log(column);
-    //   this.column = column;
-    // });
+    localStorage.getItem('Column');
   }
 
   onAddCard(text: string, columnId: number) {

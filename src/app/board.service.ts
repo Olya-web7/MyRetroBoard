@@ -16,15 +16,18 @@ export class BoardService {
   private board: Column[] = this.initBoard
   private board$ = new BehaviorSubject<Column[]>(this.initBoard)
 
-  constructor(private http: HttpClient, public afs: AngularFirestore) {
-    this.columns = this.afs.collection('board').valueChanges();
+  constructor(
+    private http: HttpClient, public afs: AngularFirestore) {
+    // this.columns = this.afs.collection('board').valueChanges();
   }
 
   getColumn() {
+    localStorage.getItem('Column');
     return this.columns;
   }
 
   getBoard$() {
+    localStorage.getItem('Column');
     return this.board$.asObservable()
   }
 
@@ -40,6 +43,7 @@ export class BoardService {
     this.http.post<Column>(`${environment.firebase.databaseURL}/board.json`, newColumn)
       .subscribe(() => {
         console.log(newColumn);
+        localStorage.setItem('Column', newColumn.title);
       })
   }
 
@@ -69,22 +73,8 @@ export class BoardService {
       return column;
     });
     this.board$.next([...this.board]);
-    // localStorage.removeItem('Card');
+    localStorage.removeItem('Card');
   }
-
-  // deleteCard(cardId: number, columnId: number) {
-  //   this.http.delete('http://localhost:3000/api/board' + columnId)
-  //     .subscribe(() => {
-  //       console.log('deleted')
-  //     });
-  //   this.board = this.board.map((column: Column) => {
-  //     if (column.id === columnId) {
-  //       column.list = column.list.filter((card: Card) => card.id !== cardId);
-  //     }
-  //     return column;
-  //   });
-  //   this.board$.next([...this.board]);
-  // }
 
   addLike(cardId: number, columnId: number) {
     this.board = this.board.map((column: Column) => {
