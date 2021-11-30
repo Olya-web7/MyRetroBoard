@@ -3,8 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Card, Column } from './models';
 import { environment } from 'src/environments/environment';
-// import { map } from 'rxjs/operators';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 
 @Injectable({providedIn: 'root'})
 export class BoardService {
@@ -12,8 +11,7 @@ export class BoardService {
   columns!: Observable<any[]>
 
   private initBoard = [
-    {
-      id: 1, title: 'Went well', color: '#009785', list: []}
+    {id: 1, title: 'Went well', color: '#009785', list: []}
   ]
   private board: Column[] = this.initBoard
   private board$ = new BehaviorSubject<Column[]>(this.initBoard)
@@ -39,7 +37,7 @@ export class BoardService {
     };
     this.board = [...this.board, newColumn];
     this.board$.next([...this.board]);
-    this.http.post<Column>(`${environment.fbDbUrl}/board.json`, newColumn)
+    this.http.post<Column>(`${environment.firebase.databaseURL}/board.json`, newColumn)
       .subscribe(() => {
         console.log(newColumn);
       })
