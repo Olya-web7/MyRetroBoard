@@ -18,7 +18,6 @@ export class BoardService {
 
   constructor(
     private http: HttpClient, public afs: AngularFirestore) {
-    // this.columns = this.afs.collection('board').valueChanges();
   }
 
   getColumn() {
